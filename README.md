@@ -1,42 +1,25 @@
-# contentstack-nuxt3-starter-app
+[![Contentstack](/static/contentstack-readme-logo.png)](https://www.contentstack.com/)
 
-# Nuxt 3 Minimal Starter
+# Create a marketing website using Nuxt3
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+About Contentstack: Contentstack is a headless CMS with an API-first approach that puts content at the centre. It is designed to simplify the process of publication by separating code from content.
 
-## Setup
+About this project: Nuxt.js is a JavaScript framework for building web applications. It is based on Vue.js, and is commonly used to create server-rendered applications. Nuxt version 3 is the latest version of the framework. 
 
-Make sure to install the dependencies:
+![contentstack-nuxtjs-starter-app](/static/readme.png)
 
-```bash
-# yarn
-yarn install
-# npm
-npm install
-# pnpm
-pnpm install
-```
+## Live Demo
 
-## Development Server
+You can check the [live demo](https://contentstack-nuxt3-starter-app.vercel.app/) to get first-hand experience of the website.
 
-Start the development server on http://localhost:3000
+## Tutorial
 
-```bash
-npm run dev
-```
+We have created an in-depth tutorial on how you can create a starter website using the Contentstack's Node.js SDK and fetch its content using Contentstack.
 
-## Production
+--------------[DOC LINK]-----------------------
 
-Build the application for production:
+## Documentation
 
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [Contentstack documentation](https://www.contentstack.com/docs/)
+- [Region support documentation](https://www.contentstack.com/docs/developers/selecting-region-in-contentstack-starter-apps)
+- [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction)
