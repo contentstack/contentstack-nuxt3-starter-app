@@ -39,7 +39,10 @@
         </div>
       </div>
     </div>
-    <div class="copyright" v-html="footerData?.copyright" />
+    <div
+      class="copyright"
+      v-if="footerData?.copyright"
+      v-html="footerData?.copyright" />
   </footer>
 </template>
 
