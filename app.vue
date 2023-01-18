@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <h1>HEYYYY</h1>
-    <NuxtWelcome />
-  </div>
+  <Navbar />
+  <DevTools />
+  <NuxtPage />
+  <Footer />
 </template>
+
+<script>
+import "@contentstack/live-preview-utils/dist/main.css";
+import "vue3-json-viewer/dist/index.css";
+</script>
