@@ -33,8 +33,8 @@ export const getAllEntries = async () => {
     jsonRtePath: undefined,
   });
   liveEdit &&
-    response[0].forEach((entry: any) => addEditableTags(entry, "page", true));
-  return response[0];
+    response.forEach((entry: any) => addEditableTags(entry, "page", true));
+  return response;
 };
 
 export const getPageRes = async (entryUrl: string) => {

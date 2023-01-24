@@ -46,12 +46,26 @@
 </template>
 
 <script setup>
-import { getHeaderRes } from "~/helper";
+import { getHeaderRes, getAllEntries } from "~/helper";
 import ToolTip from "./ToolTip.vue";
-
 const headerData = ref(null);
 const fetchHeaderData = async () => {
   let response = await getHeaderRes();
+  const navHeaderList = response.navigation_menu;
+  let allPages = await getAllEntries();
+  if (allPages.length !== response.length) {
+    allPages.forEach((entry) => {
+      const hFound = response.navigation_menu.find(
+        (navLink) => navLink.label === entry.title
+      );
+      if (!hFound) {
+        navHeaderList.push({
+          label: entry.title,
+          page_reference: [{ title: entry.title, url: entry.url }],
+        });
+      }
+    });
+  }
   headerData.value = response;
 };
 onMounted(() => {
