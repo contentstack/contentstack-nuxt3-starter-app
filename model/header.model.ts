@@ -1,7 +1,7 @@
 import type { Img } from "./page.model";
 
 export interface HeaderModel {
-  $: any;
+  $: HeaderModel;
   title: string;
   uid: string;
   logo: Img;

@@ -1,19 +1,19 @@
 import type { SEO } from "./seo.model";
 
 export interface Img {
-  $: any;
+  $: Img;
   url: string;
   title: string;
   filename: string;
 }
 
 export interface Link {
-  $: any;
+  $: Link;
   title: string;
   href: string;
 }
 export interface HeroBanner {
-  $: any;
+  $: HeroBanner;
   banner_title: string;
   bg_color: string;
   banner_image: Img;
@@ -23,7 +23,7 @@ export interface HeroBanner {
 }
 
 export interface Section {
-  $: any;
+  $: Section;
   image: Img;
   title_h2: string;
   description: string;
@@ -32,7 +32,7 @@ export interface Section {
 }
 
 export interface SectionWithBuckets {
-  $: any;
+  $: SectionWithBuckets;
   buckets: {
     $: any;
     icon: Img;
@@ -46,7 +46,7 @@ export interface SectionWithBuckets {
 }
 
 export interface FromBlog {
-  $: any;
+  $: FromBlog;
   title_h2: string;
   view_articles: Link;
   featured_blogs: {
@@ -60,7 +60,7 @@ export interface FromBlog {
 }
 
 export interface SectionWithCards {
-  $: any;
+  $: SectionWithCards;
   cards: {
     title_h3: string;
     description: string;
@@ -69,7 +69,7 @@ export interface SectionWithCards {
 }
 
 export interface OurTeam {
-  $: any;
+  $: OurTeam;
   title_h2: string;
   description: string;
   employees: {
@@ -81,7 +81,7 @@ export interface OurTeam {
 }
 
 export interface SectionWithHtmlCode {
-  $: any;
+  $: SectionWithHtmlCode;
   title: string;
   html_code: string;
   description: string;
@@ -89,7 +89,7 @@ export interface SectionWithHtmlCode {
 }
 
 export interface Widget {
-  $: any;
+  $: Widget;
   widget: {
     title_h2: string;
     type: string;
@@ -97,7 +97,7 @@ export interface Widget {
   };
 }
 export interface Page {
-  $: any;
+  $: Page;
   title: string;
   url: string;
   seo: SEO;

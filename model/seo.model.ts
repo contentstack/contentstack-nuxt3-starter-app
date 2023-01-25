@@ -1,5 +1,5 @@
 export interface SEO {
-  $: any;
+  $: SEO;
   enable_search_indexing: boolean;
   keywords: string;
   meta_description: string;

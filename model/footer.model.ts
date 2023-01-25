@@ -1,7 +1,7 @@
 import type { Img, Link } from "./page.model";
 
 export interface FooterModel {
-  $: any;
+  $: FooterModel;
   uid: string;
   title: string;
   copyright: string;

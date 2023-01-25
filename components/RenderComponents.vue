@@ -4,9 +4,7 @@
     :data-pageref="entryUid"
     data-contenttype="page"
     :data-locale="locale">
-    <!-- <ClientOnly>
-      <Devtools />
-    </ClientOnly> -->
+    
     <template v-for="(component, index) in components">
       <HeroBanner
         v-if="component.hero_banner && page === 'Home'"

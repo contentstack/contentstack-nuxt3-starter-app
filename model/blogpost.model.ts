@@ -2,7 +2,7 @@ import type { SEO } from "./seo.model";
 import type { Img } from "./page.model";
 
 export interface BlogPostModel {
-  $: any;
+  $: BlogPostModel;
   title: string;
   url: string;
   seo: SEO;
