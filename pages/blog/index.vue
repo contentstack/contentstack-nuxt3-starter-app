@@ -55,7 +55,9 @@
 import { getBlogListRes, getPageRes } from "~/helper";
 import { onEntryChange } from "~/sdk";
 import { ref, onMounted } from "vue";
+import { useResponseStore } from "~~/store";
 
+const store = useResponseStore();
 const banner = ref(null);
 const blogList = ref(null);
 const archived = ref([]);
@@ -63,6 +65,7 @@ const archived = ref([]);
 const fetchData = async () => {
   let response = await getPageRes("/blog");
   banner.value = response;
+  store.setPage(response);
 };
 
 const fetchBlogList = async () => {
@@ -73,9 +76,13 @@ const fetchBlogList = async () => {
       archived.value.push(single);
     }
   });
+  store.setBlogList(response);
+  store.setBlogPost(null);
 };
 onMounted(() => {
-  onEntryChange(fetchData);
-  fetchBlogList();
+  onEntryChange(() => {
+    fetchData();
+    fetchBlogList();
+  });
 });
 </script>

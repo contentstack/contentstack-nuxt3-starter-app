@@ -43,14 +43,9 @@
 
 <script setup>
 import { JsonViewer } from "vue3-json-viewer";
-import {
-  getBlogListRes,
-  getFooterRes,
-  getHeaderRes,
-  getPageRes,
-} from "~/helper";
 import ToolTip from "./ToolTip.vue";
 import { useRoute } from "vue-router";
+import { useResponseStore } from "~~/store";
 
 function filterObject(inputObject) {
   const unWantedProps = [
@@ -79,46 +74,23 @@ const json = ref(null);
 const forceUpdate = ref(0);
 const route = useRoute();
 const url = ref(route.fullPath);
+const store = useResponseStore();
 
-const getPageData = async () => {
-  let res;
-  if (url.value.includes("/blog")) {
-    res = await getPageRes("/blog");
-    return res;
-  } else {
-    res = await getPageRes(url.value);
-    return res;
-  }
-};
-const getBlogListData = async () => {
-  if (url.value.includes("/blog")) {
-    return getBlogListRes();
-  }
-};
-const getData = async () => {
-  Promise.all([
-    getHeaderRes(),
-    getPageData(),
-    getFooterRes(),
-    getBlogListData(),
-  ])
-    .then((values) => filterObject(values))
-    .then((value) => {
-      if (url.value.includes("/blog")) {
-        json.value = {
-          Header: value[0],
-          Page: value[1],
-          Footer: value[2],
-          BlogList: value[3],
-        };
-      } else {
-        json.value = {
-          Header: value[0],
-          Page: value[1],
-          Footer: value[2],
-        };
-      }
-    });
+const getData = () => {
+  const { getHeader, getFooter, getBlogList, getBlogPost, getPage } =
+    useResponseStore();
+
+  const response = {
+    header: getHeader,
+    footer: getFooter,
+  };
+
+  getPage && (response.page = getPage);
+  getBlogPost && (response.blog_post = getBlogPost);
+  getBlogList && (response.blog_lists = getBlogList);
+  const jsonData = filterObject(response);
+  json.value = jsonData;
+  return jsonData;
 };
 
 const copyObject = async () => {
@@ -135,5 +107,4 @@ watchEffect(() => {
   url.value = route.fullPath;
   getData();
 });
-
 </script>

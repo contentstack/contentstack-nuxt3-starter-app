@@ -47,7 +47,10 @@
 
 <script setup>
 import { getHeaderRes, getAllEntries } from "~/helper";
+import { useResponseStore } from "~~/store";
 import ToolTip from "./ToolTip.vue";
+const store = useResponseStore();
+
 const headerData = ref(null);
 const fetchHeaderData = async () => {
   let response = await getHeaderRes();
@@ -67,6 +70,7 @@ const fetchHeaderData = async () => {
     });
   }
   headerData.value = response;
+  store.setHeader(response);
 };
 onMounted(() => {
   fetchHeaderData();
