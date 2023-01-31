@@ -41,22 +41,29 @@
 <script setup>
 import { getBlogPostRes, getPageRes } from "~/helper";
 import { onEntryChange } from "~/sdk";
+import { useResponseStore } from "~~/store";
 import BlogBanner from "../../components/BlogBanner.vue";
 
 const banner = ref(null);
 const data = ref(null);
-const date = ref(null);
+const store = useResponseStore()
+
 
 const fetchBannerData = async () => {
   let response = await getPageRes("/blog");
   banner.value = response;
+  store.setPage(response)
 };
 const fetchBlogPost = async () => {
   let response = await getBlogPostRes(`${window.location.pathname}`);
   data.value = response;
+  store.setBlogPost(response)
+  store.setBlogList(null)
 };
 onMounted(() => {
-  onEntryChange(fetchBlogPost);
-  fetchBannerData();
+  onEntryChange(() => {
+    fetchBlogPost()
+    fetchBannerData();
+  });
 });
 </script>

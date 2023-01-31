@@ -26,4 +26,18 @@ export default defineNuxtConfig({
     "~/assets/styles/third-party.css",
     "~/assets/styles/tooltip.css",
   ],
+  modules: [
+    // ...
+    [
+      "@pinia/nuxt",
+      {
+        autoImports: [
+          // automatically imports `defineStore`
+          "defineStore", // import { defineStore } from 'pinia'
+          // automatically imports `defineStore` as `definePiniaStore`
+          ["defineStore", "definePiniaStore"], // import { defineStore as definePiniaStore } from 'pinia'
+        ],
+      },
+    ],
+  ],
 });

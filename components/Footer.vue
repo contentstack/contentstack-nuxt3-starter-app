@@ -48,10 +48,13 @@
 
 <script setup>
 import { getFooterRes } from "~/helper";
+import { useResponseStore } from "~~/store";
+const store = useResponseStore();
 const footerData = ref(null);
 const fetchFooterData = async () => {
   let response = await getFooterRes();
   footerData.value = response;
+  store.setFooter(response);
 };
 onMounted(() => {
   fetchFooterData();
