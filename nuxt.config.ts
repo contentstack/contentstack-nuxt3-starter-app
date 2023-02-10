@@ -2,6 +2,22 @@
 export default defineNuxtConfig({
   app: {
     head: {
+      title: "contentstack-nuxt3-starter-app",
+      meta: [
+        { charset: "utf-8" },
+        {
+          name: "viewport",
+          content: "width=device-width,initial-scale=1,minimum-scale=1",
+        },
+        { name: "theme-color", content: "#000000" },
+        {
+          name: "description",
+          content: "Website created using Nuxtjs version 3",
+        },
+      ],
+      htmlAttrs: {
+        lang: "en",
+      },
       script: [
         {
           src: "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js",
