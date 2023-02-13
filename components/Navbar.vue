@@ -60,7 +60,7 @@ const fetchHeaderData = async () => {
   if (allPages.length !== response.length) {
     allPages.forEach((entry) => {
       const hFound = response.navigation_menu.find(
-        (navLink) => navLink.label === entry.title
+        (navLink) => navLink.page_reference[0].uid === entry.uid
       );
       if (!hFound) {
         navHeaderList.push({
