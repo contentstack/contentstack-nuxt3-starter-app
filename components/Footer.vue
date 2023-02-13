@@ -48,6 +48,7 @@
 
 <script setup>
 import { getFooterRes } from "~/helper";
+import { onEntryChange } from "~~/sdk";
 import { useResponseStore } from "~~/store";
 const store = useResponseStore();
 const footerData = ref(null);
@@ -57,6 +58,6 @@ const fetchFooterData = async () => {
   store.setFooter(response);
 };
 onMounted(() => {
-  fetchFooterData();
+  onEntryChange(fetchFooterData);
 });
 </script>

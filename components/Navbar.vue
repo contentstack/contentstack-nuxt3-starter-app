@@ -47,6 +47,7 @@
 
 <script setup>
 import { getHeaderRes, getAllEntries } from "~/helper";
+import { onEntryChange } from "~~/sdk";
 import { useResponseStore } from "~~/store";
 import ToolTip from "./ToolTip.vue";
 const store = useResponseStore();
@@ -73,6 +74,6 @@ const fetchHeaderData = async () => {
   store.setHeader(response);
 };
 onMounted(() => {
-  fetchHeaderData();
+  onEntryChange(fetchHeaderData);
 });
 </script>
