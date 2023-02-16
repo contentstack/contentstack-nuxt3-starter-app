@@ -16,7 +16,7 @@ You can check the [live demo](https://contentstack-nuxt3-starter-app.vercel.app/
 
 We have created an in-depth tutorial on how you can create a starter website using the Contentstack's Node.js SDK and fetch its content using Contentstack.
 
---------------[DOC LINK]-----------------------
+[Build a Starter Website Using Nuxt3 and Contentstack](https://www.contentstack.com/docs/developers/sample-apps/build-a-starter-website-using-nuxt3-and-contentstack/)
 
 ## Documentation
 
