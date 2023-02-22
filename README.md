@@ -6,7 +6,8 @@ About Contentstack: Contentstack is a headless CMS with an API-first approach th
 
 About this project: Nuxt.js is a JavaScript framework for building web applications. It is based on Vue.js, and is commonly used to create server-rendered applications. Nuxt version 3 is the latest version of the framework. 
 
-![contentstack-nuxtjs-starter-app](/static/readme.png)
+![image](https://user-images.githubusercontent.com/115449840/220604118-99f866e5-83b0-4f90-9c0f-7452876b760c.png)
+
 
 ## Live Demo
 
