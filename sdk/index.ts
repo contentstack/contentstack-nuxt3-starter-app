@@ -25,7 +25,7 @@ const Stack = Contentstack.Stack({
   //@ts-ignore
   region: `${import.meta.env.VITE_CONTENTSTACK_REGION}`
     ? `${import.meta.env.VITE_CONTENTSTACK_REGION}`
-    : "main",
+    : "us",
   live_preview: {
     management_token: `${import.meta.env.VITE_CONTENTSTACK_MANAGEMENT_TOKEN}`
       ? `${import.meta.env.VITE_CONTENTSTACK_MANAGEMENT_TOKEN}`
