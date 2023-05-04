@@ -1,7 +1,7 @@
 {
   "name": "contentstack-nuxt3-starter-app",
   "description": "A starter app for Contentstack and nuxt3",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "author": "Contentstack",
   "scripts": {
@@ -10,7 +10,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "build-dev": "nuxt dev --port 2035"
+    "build-dev": "nuxt dev "
   },
   "license": "MIT",
   "dependencies": {
