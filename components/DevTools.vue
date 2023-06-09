@@ -18,7 +18,7 @@
               v-on:click="copyObject(JSON.stringify(json))"
               aria-hidden="true">
               <ToolTip
-                :content="forceUpdate === 1 ? 'copied' : 'copy'"
+                :content="forceUpdate === 0 ? 'copy' : 'copied'"
                 direction="top">
                 <img src="../static/copy.svg" alt="copy icon" />
               </ToolTip>
@@ -32,7 +32,7 @@
         </div>
         <div class="modal-body">
           <pre v-if="json" id="jsonViewer">
-              <JsonViewer :value="json" theme="jv-light" />
+              <JsonViewer :value="json" theme="jv-light" :expand-depth="1" />
           </pre>
         </div>
         <div class="modal-footer"></div>
@@ -41,13 +41,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="tsx">
 import { JsonViewer } from "vue3-json-viewer";
-import ToolTip from "./ToolTip.vue";
 import { useRoute } from "vue-router";
 import { useResponseStore } from "~~/store";
+import { JSONProp } from "~~/typescript/components";
+import { FooterRes, HeaderRes } from "~~/typescript/response";
+import { BlogPost, Page } from "~~/typescript/pages";
 
-function filterObject(inputObject) {
+function filterObject(inputObject: any) {
   const unWantedProps = [
     "$",
     "_version",
@@ -80,14 +82,14 @@ const getData = () => {
   const { getHeader, getFooter, getBlogList, getBlogPost, getPage } =
     useResponseStore();
 
-  const response = {
-    header: getHeader,
-    footer: getFooter,
+  const response: JSONProp = {
+    header: getHeader as HeaderRes,
+    footer: getFooter as FooterRes,
   };
 
-  getPage && (response.page = getPage);
-  getBlogPost && (response.blog_post = getBlogPost);
-  getBlogList && (response.blog_lists = getBlogList);
+  getPage && (response.page = getPage as Page);
+  getBlogPost && (response.blog_post = getBlogPost as BlogPost);
+  getBlogList && (response.blog_lists = getBlogList as BlogPost[]);
   const jsonData = filterObject(response);
   json.value = jsonData;
   return jsonData;

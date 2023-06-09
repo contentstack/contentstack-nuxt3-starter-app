@@ -45,33 +45,22 @@
   </header>
 </template>
 
-<script setup>
-import { getHeaderRes, getAllEntries } from "~/helper";
+<script lang="tsx" setup>
+import { getHeader, getAllEntries, filterHeaderNav } from "~/helper";
 import { onEntryChange } from "~~/sdk";
 import { useResponseStore } from "~~/store";
-import ToolTip from "./ToolTip.vue";
+import { HeaderRes } from "~~/typescript/response";
 const store = useResponseStore();
 
-const headerData = ref(null);
+const headerData = ref<HeaderRes>();
 const fetchHeaderData = async () => {
-  let response = await getHeaderRes();
-  const navHeaderList = response.navigation_menu;
-  let allPages = await getAllEntries();
-  if (allPages.length !== response.length) {
-    allPages.forEach((entry) => {
-      const hFound = response.navigation_menu.find(
-        (navLink) => navLink.page_reference[0].uid === entry.uid
-      );
-      if (!hFound) {
-        navHeaderList.push({
-          label: entry.title,
-          page_reference: [{ title: entry.title, url: entry.url }],
-        });
-      }
-    });
-  }
-  headerData.value = response;
-  store.setHeader(response);
+  const result = await getHeader();
+  // only for dynamic pages
+  const responsePages = await getAllEntries();
+  const newHeaderRes = filterHeaderNav(responsePages, result);
+  headerData.value = newHeaderRes;
+  //ends
+  store.setHeader(newHeaderRes);
 };
 onMounted(() => {
   onEntryChange(fetchHeaderData);

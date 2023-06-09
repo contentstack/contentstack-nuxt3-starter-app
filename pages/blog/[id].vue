@@ -14,7 +14,7 @@
         <div class="blog-detail">
           <h2>{{ data.title }}</h2>
           <span>
-            {{ data.date }},
+            {{ formatData(data.date) }},
             <strong>{{ data.author[0].title }}</strong>
           </span>
           <p v-html="data.body" />
@@ -38,32 +38,32 @@
   </main>
 </template>
 
-<script setup>
-import { getBlogPostRes, getPageRes } from "~/helper";
+<script lang="tsx" setup>
+import dayjs from "dayjs";
+import { getBlogPost, getPage } from "~/helper";
 import { onEntryChange } from "~/sdk";
 import { useResponseStore } from "~~/store";
-import BlogBanner from "../../components/BlogBanner.vue";
+import { BlogPost, Page } from "~~/typescript/pages";
 
-const banner = ref(null);
-const data = ref(null);
-const store = useResponseStore()
+const banner = ref<Page>();
+const data = ref<BlogPost>();
+const store = useResponseStore();
 
-
-const fetchBannerData = async () => {
-  let response = await getPageRes("/blog");
+const fetchData = async () => {
+  const response = await getPage("/blog");
+  const blogPost = await getBlogPost(`${window.location.pathname}`);
   banner.value = response;
-  store.setPage(response)
+  data.value = blogPost;
+  store.setBlogPost(blogPost);
+  store.setPage(response);
+  store.setBlogList(null);
 };
-const fetchBlogPost = async () => {
-  let response = await getBlogPostRes(`${window.location.pathname}`);
-  data.value = response;
-  store.setBlogPost(response)
-  store.setBlogList(null)
+const formatData = (param: string) => {
+  return dayjs(param).format("ddd, MMM D YYYY");
 };
 onMounted(() => {
   onEntryChange(() => {
-    fetchBlogPost()
-    fetchBannerData();
+    fetchData().catch((err) => console.error(err));
   });
 });
 </script>
