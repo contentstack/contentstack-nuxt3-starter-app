@@ -6,8 +6,8 @@
       :data-pageref="banner.uid"
       data-contenttype="page"
       :data-locale="banner.locale">
-      <div class="blog-column-left" v-if="blogList">
-        <template v-for="(list, index) in blogList.slice(0, 3)" :key="index">
+      <div class="blog-column-left" v-if="recent">
+        <template v-for="(list, index) in recent" :key="index">
           <div class="blog-list">
             <NuxtLink :to="list.url">
               <img
@@ -20,7 +20,7 @@
                 <h3>{{ list.title }}</h3>
               </NuxtLink>
               <p>
-                {{ list.date }},
+                {{ formatData(list.date) }},
                 <template v-if="list.author">
                   <strong>{{ list.author[0].title }}</strong>
                 </template>
@@ -51,38 +51,37 @@
   </main>
 </template>
 
-<script setup>
-import { getBlogListRes, getPageRes } from "~/helper";
+<script lang="tsx" setup>
+import { getBlogList, getPage } from "~/helper";
 import { onEntryChange } from "~/sdk";
 import { ref, onMounted } from "vue";
 import { useResponseStore } from "~~/store";
+import dayjs from "dayjs";
+import { BlogPost, Page } from "~~/typescript/pages";
 
 const store = useResponseStore();
-const banner = ref(null);
-const blogList = ref(null);
-const archived = ref([]);
+const banner = ref<Page>();
+const recent = ref<BlogPost[]>([]);
+const archived = ref<BlogPost[]>([]);
 
 const fetchData = async () => {
-  let response = await getPageRes("/blog");
+  const response = await getPage("/blog");
+  const { recentBlogs, archivedBlogs } = await getBlogList();
+  const blogList = recentBlogs.concat(archivedBlogs);
   banner.value = response;
+  recent.value = recentBlogs;
+  archived.value = archivedBlogs;
   store.setPage(response);
+  store.setBlogList(blogList);
+  store.setBlogPost(null);
 };
 
-const fetchBlogList = async () => {
-  let response = await getBlogListRes();
-  blogList.value = response;
-  response.map((single) => {
-    if (single.is_archived) {
-      archived.value.push(single);
-    }
-  });
-  store.setBlogList(response);
-  store.setBlogPost(null);
+const formatData = (param: string) => {
+  return dayjs(param).format("ddd, MMM D YYYY");
 };
 onMounted(() => {
   onEntryChange(() => {
-    fetchData();
-    fetchBlogList();
+    fetchData().catch((err) => console.error(err));
   });
 });
 </script>

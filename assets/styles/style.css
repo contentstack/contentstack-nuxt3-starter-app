@@ -1400,3 +1400,7 @@ footer a {
 .string-value {
   color: #5d9ccb;
 }
+
+.json-copy{
+  cursor: pointer;
+}

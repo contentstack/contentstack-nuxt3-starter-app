@@ -46,15 +46,20 @@
   </footer>
 </template>
 
-<script setup>
-import { getFooterRes } from "~/helper";
+<script lang="tsx" setup>
+import { getFooter,getAllEntries,filterFooterLinks } from "~/helper";
 import { onEntryChange } from "~~/sdk";
 import { useResponseStore } from "~~/store";
+import { FooterRes } from "~~/typescript/response";
 const store = useResponseStore();
-const footerData = ref(null);
+const footerData = ref<FooterRes>();
 const fetchFooterData = async () => {
-  let response = await getFooterRes();
-  footerData.value = response;
+  let response = await getFooter();
+  // only for dynamic pages
+  const responsePages = await getAllEntries();
+  const newFooterRes = filterFooterLinks(responsePages, response);
+  footerData.value = newFooterRes;
+  // ends
   store.setFooter(response);
 };
 onMounted(() => {

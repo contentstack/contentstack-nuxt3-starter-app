@@ -20,11 +20,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
+import { PropType } from "nuxt/dist/app/compat/capi";
+import { OurTeam } from "~~/typescript/components";
 const props = defineProps({
   data: {
     required: true,
-    type: Object,
+    type: Object as PropType<OurTeam>,
   },
 });
 </script>

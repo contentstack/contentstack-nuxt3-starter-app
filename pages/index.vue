@@ -7,17 +7,18 @@
     :locale="data.locale" />
 </template>
 
-<script setup>
-import { getPageRes } from "~/helper";
+<script lang="tsx" setup>
+import { getPage } from "~/helper";
 import { onEntryChange } from "~/sdk";
 import { ref, onMounted } from "vue";
 import { useResponseStore } from "~~/store";
+import { Page } from "~~/typescript/pages";
 
 const store = useResponseStore()
 
-const data = ref(null);
+const data = ref<Page>();
 const fetchData = async () => {
-  let response = await getPageRes("/");
+  let response = await getPage("/");
   data.value = response;
   store.setPage(response);
   store.setBlogPost(null)
