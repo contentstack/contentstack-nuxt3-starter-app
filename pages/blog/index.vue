@@ -26,7 +26,9 @@
                 </template>
               </p>
               <template v-if="list.body">
-                <p v-html="list.body.slice(0, 250)" />
+                <client-only>
+                  <p v-html="list.body.slice(0, 250)" />
+                </client-only>
               </template>
               <NuxtLink :to="list.url">
                 <span>Read more --&gt;</span>
@@ -42,7 +44,9 @@
             <NuxtLink :to="component.url">
               <div>
                 <h4>{{ component.title }}</h4>
-                <p v-html="component.body.slice(0, 80)" />
+                <client-only>
+                  <p v-html="component.body.slice(0, 80)" />
+                </client-only>
               </div>
             </NuxtLink> </template
         ></template>
@@ -52,9 +56,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { getBlogList, getPage } from "~/helper";
-import { onEntryChange } from "~/sdk";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useResponseStore } from "~~/store";
 import dayjs from "dayjs";
 import { BlogPost, Page } from "~~/typescript/pages";
@@ -63,25 +65,24 @@ const store = useResponseStore();
 const banner = ref<Page>();
 const recent = ref<BlogPost[]>([]);
 const archived = ref<BlogPost[]>([]);
-
-const fetchData = async () => {
-  const response = await getPage("/blog");
-  const { recentBlogs, archivedBlogs } = await getBlogList();
-  const blogList = recentBlogs.concat(archivedBlogs);
-  banner.value = response;
-  recent.value = recentBlogs;
-  archived.value = archivedBlogs;
-  store.setPage(response);
-  store.setBlogList(blogList);
-  store.setBlogPost(null);
-};
-
+const page = (await useEntriesByUrl({
+  contentTypeUid: "page",
+  entryUrl: "/blog",
+  referenceFieldPath: ["page_components.from_blog.featured_blogs"],
+  jsonRtePath: [
+    "page_components.from_blog.featured_blogs.body",
+    "page_components.section_with_buckets.buckets.description",
+    "page_components.section_with_html_code.description",
+  ],
+})) as Page[];
+banner.value = page[0];
+const { recentBlogs, archivedBlogs } = await useBlogLists();
+recent.value = recentBlogs;
+archived.value = archivedBlogs;
+store.setPage(page[0]);
+store.setBlogList(recentBlogs.concat(archivedBlogs));
+store.setBlogPost({});
 const formatData = (param: string) => {
   return dayjs(param).format("ddd, MMM D YYYY");
 };
-onMounted(() => {
-  onEntryChange(() => {
-    fetchData().catch((err) => console.error(err));
-  });
-});
 </script>

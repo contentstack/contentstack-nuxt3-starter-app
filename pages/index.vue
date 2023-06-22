@@ -1,6 +1,6 @@
 <template>
   <RenderComponents
-    v-if="data"
+    v-if="!isEmpty(data)"
     :components="data.page_components"
     :page="data.title"
     :entry-uid="data.uid"
@@ -8,23 +8,26 @@
 </template>
 
 <script lang="tsx" setup>
-import { getPage } from "~/helper";
-import { onEntryChange } from "~/sdk";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
+import {isEmpty} from "lodash";
 import { useResponseStore } from "~~/store";
 import { Page } from "~~/typescript/pages";
+import { useEntriesByUrl } from "~/composables/useEntriesByUrl";
 
-const store = useResponseStore()
-
+const store = useResponseStore();
 const data = ref<Page>();
-const fetchData = async () => {
-  let response = await getPage("/");
-  data.value = response;
-  store.setPage(response);
-  store.setBlogPost(null)
-};
-
-onMounted(() => {
-  onEntryChange(fetchData);
-});
+const page = (await useEntriesByUrl({
+  contentTypeUid: "page",
+  entryUrl: "/",
+  referenceFieldPath: ["page_components.from_blog.featured_blogs"],
+  jsonRtePath: [
+    "page_components.from_blog.featured_blogs.body",
+    "page_components.section_with_buckets.buckets.description",
+    "page_components.section_with_html_code.description",
+  ],
+})) as Page[];
+data.value = page[0];
+store.setPage(page[0]);
+store.setBlogList([]);
+store.setBlogPost({});
 </script>

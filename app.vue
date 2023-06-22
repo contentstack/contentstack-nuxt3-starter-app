@@ -1,6 +1,8 @@
 <template>
   <Header />
-  <DevTools />
+  <client-only>
+    <DevTools />
+  </client-only>
   <NuxtPage />
   <Footer />
 </template>
