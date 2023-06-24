@@ -19,7 +19,7 @@
     "contentstack": "^3.17.1",
     "dayjs": "^1.11.8",
     "node-fetch": "^2.6.7",
-    "nuxt": "3.0.0",
+    "nuxt": "3.4.3",
     "vue3-json-viewer": "^2.2.2"
   },
   "overrides": {
