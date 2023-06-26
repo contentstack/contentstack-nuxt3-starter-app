@@ -8,24 +8,26 @@
 </template>
 
 <script lang="tsx" setup>
-import { getPage } from "~/helper";
-import { onEntryChange } from "~/sdk";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useResponseStore } from "~~/store";
 import { Page } from "~~/typescript/pages";
 
-const store = useResponseStore()
+const store = useResponseStore();
 
 const data = ref<Page>();
-const fetchData = async () => {
-  let response = await getPage(`${window.location.pathname}`);
-
-  data.value = response;
-  store.setPage(response)
-  store.setBlogList(null)
-  store.setBlogPost(null)
-};
-onMounted(() => {
-  onEntryChange(fetchData);
-});
+const route = useRoute();
+const page = (await useEntriesByUrl({
+  contentTypeUid: "page",
+  entryUrl: route.path,
+  referenceFieldPath: ["page_components.from_blog.featured_blogs"],
+  jsonRtePath: [
+    "page_components.from_blog.featured_blogs.body",
+    "page_components.section_with_buckets.buckets.description",
+    "page_components.section_with_html_code.description",
+  ],
+})) as Page[];
+data.value = page[0];
+store.setPage(page[0]);
+store.setBlogList([]);
+store.setBlogPost({});
 </script>

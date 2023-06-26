@@ -1,5 +1,21 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: true,
+  runtimeConfig: {
+    public: {
+      apiKey: process.env.CONTENTSTACK_API_KEY,
+      deliveryToken: process.env.CONTENTSTACK_DELIVERY_TOKEN,
+      environment: process.env.CONTENTSTACK_ENVIRONMENT,
+      region: process.env.CONTENTSTACK_REGION,
+      managementToken: process.env.CONTENTSTACK_MANAGEMENT_TOKEN,
+      apiHost: process.env.CONTENTSTACK_API_HOST,
+      appHost: process.env.CONTENTSTACK_APP_HOST,
+      branch: process.env.CONTENTSTACK_BRANCH,
+      livePreview: process.env.CONTENTSTACK_LIVE_PREVIEW,
+    },
+  },
+  plugins: [
+    { src: "~/plugins/contentstack.ts" },
+  ],
   app: {
     head: {
       title: "contentstack-nuxt3-starter-app",
@@ -43,17 +59,20 @@ export default defineNuxtConfig({
     "~/assets/styles/tooltip.css",
   ],
   modules: [
-    // ...
     [
       "@pinia/nuxt",
       {
         autoImports: [
-          // automatically imports `defineStore`
-          "defineStore", // import { defineStore } from 'pinia'
-          // automatically imports `defineStore` as `definePiniaStore`
-          ["defineStore", "definePiniaStore"], // import { defineStore as definePiniaStore } from 'pinia'
+          "defineStore",
+          ["defineStore", "definePiniaStore"],
         ],
       },
     ],
   ],
+  typescript:{
+    tsConfig:{
+      "allowJs": true,
+      "noImplicitAny": false
+    }
+  }
 });

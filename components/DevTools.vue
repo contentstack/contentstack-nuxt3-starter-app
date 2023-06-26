@@ -48,35 +48,15 @@ import { useResponseStore } from "~~/store";
 import { JSONProp } from "~~/typescript/components";
 import { FooterRes, HeaderRes } from "~~/typescript/response";
 import { BlogPost, Page } from "~~/typescript/pages";
-
-function filterObject(inputObject: any) {
-  const unWantedProps = [
-    "$",
-    "_version",
-    "ACL",
-    "_owner",
-    "_in_progress",
-    "created_at",
-    "created_by",
-    "updated_at",
-    "updated_by",
-    "publish_details",
-  ];
-  for (const key in inputObject) {
-    unWantedProps.includes(key) && delete inputObject[key];
-    if (typeof inputObject[key] !== "object") {
-      continue;
-    }
-    inputObject[key] = filterObject(inputObject[key]);
-  }
-  return inputObject;
-}
+import { isEmpty } from "lodash";
+import { useFilter } from "~/composables/useFilter";
 
 const json = ref(null);
 const forceUpdate = ref(0);
 const route = useRoute();
 const url = ref(route.fullPath);
 const store = useResponseStore();
+const {jsonFilter}= useFilter()
 
 const getData = () => {
   const { getHeader, getFooter, getBlogList, getBlogPost, getPage } =
@@ -87,17 +67,17 @@ const getData = () => {
     footer: getFooter as FooterRes,
   };
 
-  getPage && (response.page = getPage as Page);
-  getBlogPost && (response.blog_post = getBlogPost as BlogPost);
-  getBlogList && (response.blog_lists = getBlogList as BlogPost[]);
-  const jsonData = filterObject(response);
+  !isEmpty(getPage) && (response.page = getPage as Page);
+  !isEmpty(getBlogPost) && (response.blog_post = getBlogPost as BlogPost);
+  !isEmpty(getBlogList) && (response.blog_lists = getBlogList as BlogPost[]);
+  const jsonData = jsonFilter(response);
   json.value = jsonData;
   return jsonData;
 };
 
-const copyObject = async () => {
+const copyObject = async (json: string) => {
   forceUpdate.value = 1;
-  await navigator.clipboard.writeText(JSON.stringify(json.value));
+  await navigator.clipboard.writeText(json);
   setTimeout(() => {
     forceUpdate.value = 0;
   }, 3000);

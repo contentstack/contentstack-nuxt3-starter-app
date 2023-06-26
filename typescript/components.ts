@@ -68,10 +68,8 @@ export type SectionWithHtmlCode = {
 };
 
 export type Widget = {
-  widget: {
     title_h2: string;
     type: string;
-  };
 };
 
 export type Seo = {

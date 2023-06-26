@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div class="max-width footer-div" v-if="footerData">
+    <div class="max-width footer-div" v-if="!isEmpty(footerData)">
       <div class="col-quarter">
         <NuxtLink
           aria-current="page"
@@ -32,7 +32,7 @@
           <template
             v-for="index in footerData.social.social_share"
             :key="index.title">
-            <NuxtLink :to="index.link.href" :title="index.title">
+            <NuxtLink :to="index.link.href" :title="index.link.title">
               <img :src="index.icon.url" :alt="index.icon.title" />
             </NuxtLink>
           </template>
@@ -47,22 +47,26 @@
 </template>
 
 <script lang="tsx" setup>
-import { getFooter,getAllEntries,filterFooterLinks } from "~/helper";
-import { onEntryChange } from "~~/sdk";
+import { isEmpty } from "lodash";
+import { useFilter } from "~/composables/useFilter";
+import { usePageEntries } from "~/composables/usePageEntries";
 import { useResponseStore } from "~~/store";
 import { FooterRes } from "~~/typescript/response";
+
 const store = useResponseStore();
 const footerData = ref<FooterRes>();
-const fetchFooterData = async () => {
-  let response = await getFooter();
-  // only for dynamic pages
-  const responsePages = await getAllEntries();
-  const newFooterRes = filterFooterLinks(responsePages, response);
-  footerData.value = newFooterRes;
-  // ends
-  store.setFooter(response);
-};
-onMounted(() => {
-  onEntryChange(fetchFooterData);
-});
+const { footerFilter } = useFilter();
+
+const footer = (await useEntries({
+  contentTypeUid: "footer",
+  referenceFieldPath: undefined,
+  jsonRtePath: ["copyright"],
+})) as FooterRes[][];
+const allEntries = await usePageEntries();
+// to create nav routes for dynamic pages
+const updatedFooter = footerFilter(allEntries, footer[0][0]);
+
+footerData.value = updatedFooter;
+// global store for footer
+store.setFooter(updatedFooter);
 </script>
