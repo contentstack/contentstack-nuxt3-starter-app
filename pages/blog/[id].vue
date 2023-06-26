@@ -42,7 +42,7 @@
 
 <script lang="tsx" setup>
 import dayjs from "dayjs";
-import {isEmpty} from "lodash";
+import { isEmpty } from "lodash";
 import { useResponseStore } from "~~/store";
 import { BlogPost, Page } from "~~/typescript/pages";
 

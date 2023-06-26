@@ -17,7 +17,7 @@ export default defineNuxtPlugin({
       branch,
       managementToken,
       livePreview,
-      apiHost
+      apiHost,
     } = nuxtApp.$config.public;
 
     const sdkInit = initializeContentStackSdk({
@@ -43,7 +43,7 @@ export default defineNuxtPlugin({
       stackDetails: sdkInit,
       ssr: true,
     })?.catch((err) => {
-      console.error("error...",err);
+      console.error("error...", err);
     });
     return {
       provide: {

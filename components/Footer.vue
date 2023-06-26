@@ -63,8 +63,10 @@ const footer = (await useEntries({
   jsonRtePath: ["copyright"],
 })) as FooterRes[][];
 const allEntries = await usePageEntries();
+// to create nav routes for dynamic pages
 const updatedFooter = footerFilter(allEntries, footer[0][0]);
 
 footerData.value = updatedFooter;
+// global store for footer
 store.setFooter(updatedFooter);
 </script>

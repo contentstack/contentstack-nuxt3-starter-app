@@ -9,7 +9,7 @@
 
 <script lang="tsx" setup>
 import { ref } from "vue";
-import {isEmpty} from "lodash";
+import { isEmpty } from "lodash";
 import { useResponseStore } from "~~/store";
 import { Page } from "~~/typescript/pages";
 import { useEntriesByUrl } from "~/composables/useEntriesByUrl";

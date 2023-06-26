@@ -16,6 +16,7 @@ export const useEntries = ({
     },
   };
   const { $stack } = useNuxtApp();
+  
   return new Promise((resolve, reject) => {
     const query = $stack.ContentType(contentTypeUid).Query();
     if (referenceFieldPath) query.includeReference(referenceFieldPath);
