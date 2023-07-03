@@ -55,8 +55,7 @@ const json = ref(null);
 const forceUpdate = ref(0);
 const route = useRoute();
 const url = ref(route.fullPath);
-const store = useResponseStore();
-const {jsonFilter}= useFilter()
+const { jsonFilter } = useFilter();
 
 const getData = () => {
   const { getHeader, getFooter, getBlogList, getBlogPost, getPage } =

@@ -17,7 +17,7 @@
             :alt="index.featured_image.title" />
           <div class="featured-content">
             <h3>{{ index.title }}</h3>
-            <p v-html="index.body.slice(0, 255)"></p>
+            <div v-dompurify-html="index.body.slice(0, 255)"></div>
             <p>
               <NuxtLink class="blogpost-readmore" :to="index.url">
                 Read More -->

@@ -2,7 +2,8 @@
   <header class="header" v-if="!isEmpty(headerData)">
     <template v-if="headerData.notification_bar.show_announcement">
       <div class="note-div">
-        <span v-html="headerData.notification_bar.announcement_text" />
+        <span
+          v-dompurify-html="headerData.notification_bar.announcement_text" />
       </div>
     </template>
     <div class="max-width header-div">
@@ -37,11 +38,13 @@
         </ul>
       </nav>
       <div class="json-preview">
-        <ToolTip content="JSON Preview" direction="top">
-          <span data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            <img src="../static/json.svg" alt="JSON Preview icon" />
-          </span>
-        </ToolTip>
+        <client-only>
+          <ToolTip content="JSON Preview" direction="top">
+            <span data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <img src="../static/json.svg" alt="JSON Preview icon" />
+            </span>
+          </ToolTip>
+        </client-only>
       </div>
     </div>
   </header>
@@ -62,12 +65,12 @@ const header = (await useEntries({
   referenceFieldPath: ["navigation_menu.page_reference"],
   jsonRtePath: ["notification_bar.announcement_text"],
 })) as HeaderRes[][];
-console.log("header...", header[0][0]);
 
 const allEntries = await usePageEntries();
 // to create nav routes for dynamic pages
 const updatedHeader = headerFilter(allEntries, header[0][0]);
 headerData.value = updatedHeader;
+
 // global store to access header data
 store.setHeader(updatedHeader);
 </script>

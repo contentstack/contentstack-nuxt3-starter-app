@@ -1,3 +1,4 @@
+import { find } from "lodash";
 import { Page } from "~/typescript/pages";
 import { FooterRes, HeaderRes } from "~/typescript/response";
 
@@ -9,10 +10,8 @@ export const useFilter = () => {
     const navHeaderList = headerRes.navigation_menu;
     if (allEntries.length !== navHeaderList.length) {
       allEntries.forEach((entry) => {
-        const newNavFound = navHeaderList.find(
-          (navLink) => navLink.label === entry.title
-        );
-        if (!newNavFound) {
+        const newNavFound = find(navHeaderList,(navLink)=>navLink.label === entry.title)
+        if (newNavFound) {
           navHeaderList.push({
             label: entry.title,
             page_reference: [{ title: entry.title, url: entry.url }],
@@ -30,10 +29,8 @@ export const useFilter = () => {
     const navFooterList = footerRes.navigation.link;
     if (allEntries.length !== footerRes.navigation.link.length) {
       allEntries.forEach((entry) => {
-        const newLinkFound = footerRes.navigation.link.find(
-          (link) => link.title === entry.title
-        );
-        if (!newLinkFound) {
+        const newLinkFound = find(navFooterList,(navLink)=>navLink.title === entry.title)
+        if (newLinkFound) {
           navFooterList.push({ title: entry.title, href: entry.url });
         }
       });

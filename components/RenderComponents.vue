@@ -1,52 +1,53 @@
 <template>
   <main
     v-if="components"
-    :data-pageref="entryUid"
     data-contenttype="page"
+    :data-pageref="entryUid"
     :data-locale="locale">
-    
     <template v-for="(component, index) in components">
-      <HeroBanner
-        v-if="component.hero_banner && page === 'Home'"
-        :key="'hero_banner' + index"
-        title="home-content"
-        :data="component.hero_banner" />
-      <HeroBanner
-        v-if="component.hero_banner && page !== 'Home'"
-        :key="'hero_banner' + index"
-        title="about-content"
-        :data="component.hero_banner" />
+      <client-only>
+        <HeroBanner
+          v-if="component.hero_banner && page === 'Home'"
+          :key="'hero_banner-' + index"
+          title="home-content"
+          :data="component.hero_banner" />
+        <HeroBanner
+          v-if="component.hero_banner && page !== 'Home'"
+          :key="'hero_banner-' + index"
+          title="about-content"
+          :data="component.hero_banner" />
+      </client-only>
       <Section
         v-if="component.section"
-        :key="'section' + index"
+        :key="'section-' + index"
         :data="component.section" />
       <BlogSection
         v-if="component.from_blog"
-        :key="'from_blog' + index"
+        :key="'from_blog-' + index"
         :data="component.from_blog" />
       <SectionWithCards
         v-if="component.section_with_cards"
-        :key="'section_with_cards' + index"
+        :key="'section_with_cards-' + index"
         :data="component.section_with_cards" />
       <SectionWithBuckets
         v-if="component.section_with_buckets && page === 'Home'"
-        :key="'section_with_buckets' + index"
+        :key="'section_with_buckets-' + index"
         :data="component.section_with_buckets" />
       <AboutSectionBucket
         v-else-if="component.section_with_buckets && page === 'About Us'"
-        :key="'section_with_buckets' + index + 1"
+        :key="'section_with_buckets-' + index + 1"
         :data="component.section_with_buckets" />
       <TeamSection
         v-if="component.our_team"
-        :key="'our_team' + index"
+        :key="'our_team-' + index"
         :data="component.our_team" />
       <SectionWithEmbedObject
         v-if="component.section_with_html_code && page === 'Contact Us'"
-        :key="'section_with_html_code' + index"
+        :key="'section_with_html_code-' + index"
         :data="component.section_with_html_code" />
       <SectionWithEmbedObject
         v-if="component.section_with_html_code && page !== 'Contact Us'"
-        :key="'section_with_html_code' + index"
+        :key="'section_with_html_code-' + index"
         :data="component.section_with_html_code" />
     </template>
   </main>

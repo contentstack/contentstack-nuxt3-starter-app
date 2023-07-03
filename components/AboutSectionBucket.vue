@@ -11,7 +11,7 @@
               <img class="mission-icon" :src="bucket.icon.url" alt="art work" />
               <div class="mission-section-content">
                 <h3>{{ bucket.title_h3 }}</h3>
-                <p v-html="bucket.description"></p>
+                <div v-dompurify-html="bucket.description"></div>
               </div>
             </div>
           </template>
@@ -24,7 +24,7 @@
               <img class="mission-icon" :src="bucket.icon.url" alt="art work" />
               <div class="mission-section-content">
                 <h3>{{ bucket.title_h3 }}</h3>
-                <p v-html="bucket.description"></p>
+                <div v-dompurify-html="bucket.description"></div>
               </div>
             </div>
           </template>

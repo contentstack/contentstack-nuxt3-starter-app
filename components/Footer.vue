@@ -42,7 +42,7 @@
     <div
       class="copyright"
       v-if="footerData?.copyright"
-      v-html="footerData?.copyright" />
+      v-dompurify-html="footerData?.copyright" />
   </footer>
 </template>
 

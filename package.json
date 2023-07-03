@@ -21,6 +21,7 @@
     "dayjs": "^1.11.8",
     "node-fetch": "^2.6.7",
     "pinia": "^2.1.4",
+    "vue-dompurify-html": "^4.1.4",
     "vue3-json-viewer": "^2.2.2"
   },
   "devDependencies": {

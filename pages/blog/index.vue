@@ -27,7 +27,7 @@
               </p>
               <template v-if="list.body">
                 <client-only>
-                  <p v-html="list.body.slice(0, 250)" />
+                  <div v-dompurify-html="list.body.slice(0, 250)" />
                 </client-only>
               </template>
               <NuxtLink :to="list.url">
@@ -45,7 +45,7 @@
               <div>
                 <h4>{{ component.title }}</h4>
                 <client-only>
-                  <p v-html="component.body.slice(0, 80)" />
+                  <div v-dompurify-html="component.body.slice(0, 80)" />
                 </client-only>
               </div>
             </NuxtLink> </template

@@ -17,7 +17,7 @@
             {{ formatData(data.date) }},
             <strong>{{ data.author[0].title }}</strong>
           </span>
-          <span v-html="data.body"> </span>
+          <span v-dompurify-html="data.body"> </span>
         </div>
         <div v-if="data" class="blog-column-right">
           <div class="related-post">
@@ -28,9 +28,7 @@
                 <NuxtLink :key="index" :to="blog.url">
                   <h4>{{ blog.title }}</h4>
                 </NuxtLink>
-                <client-only>
-                  <p v-html="blog.body.slice(0, 80)" />
-                </client-only>
+                <div v-dompurify-html="blog.body.slice(0, 80)" />
               </div>
             </template>
           </div>
