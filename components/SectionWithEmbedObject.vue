@@ -6,20 +6,20 @@
       <div class="contact-page-content">
         <h1>{{ data.title }}</h1>
         <client-only>
-        <p v-if="data.description" v-html="data.description"></p>
+          <div
+            v-if="data.description"
+            v-dompurify-html="data.description"></div>
         </client-only>
       </div>
-      <div class="contact-page-form" v-html="data.html_code"></div>
+      <div class="contact-page-form" v-dompurify-html="data.html_code"></div>
     </div>
     <div
       v-if="data.html_code_alignment === 'Right'"
       class="contact-maps-section max-width">
-      <div class="maps-details" v-html="data.html_code"></div>
+      <div class="maps-details" v-dompurify-html="data.html_code"></div>
       <div class="contact-maps-content">
         <h2>{{ data.title }}</h2>
-        <client-only>
-        <p v-if="data.description" v-html="data.description"></p>
-        </client-only>
+        <div v-if="data.description" v-dompurify-html="data.description"></div>
       </div>
     </div>
   </div>

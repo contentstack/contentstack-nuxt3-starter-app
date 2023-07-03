@@ -18,13 +18,14 @@
     "@pinia/nuxt": "^0.4.11",
     "@types/lodash": "^4.14.195",
     "contentstack": "^3.17.1",
-    "dayjs": "^1.11.8",
+    "dayjs": "^1.11.9",
     "node-fetch": "^2.6.7",
     "pinia": "^2.1.4",
+    "vue-dompurify-html": "^4.1.4",
     "vue3-json-viewer": "^2.2.2"
   },
   "devDependencies": {
-    "@types/node": "^18",
+    "@types/node": "^20.3.3",
     "nuxt": "^3.5.2"
   },
   "overrides": {

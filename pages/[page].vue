@@ -1,14 +1,15 @@
 <template>
   <RenderComponents
-    v-if="data"
+    v-if="!isEmpty(data)"
     :components="data.page_components"
     :page="data.title"
-    :entry-uid="data.uid"
+    :entryUid="defaultTo(data.uid, '')"
     :locale="data.locale" />
 </template>
 
 <script lang="tsx" setup>
 import { ref } from "vue";
+import { isEmpty, defaultTo } from "lodash";
 import { useResponseStore } from "~~/store";
 import { Page } from "~~/typescript/pages";
 
