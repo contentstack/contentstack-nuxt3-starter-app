@@ -48,14 +48,13 @@ import { useResponseStore } from "~~/store";
 import { JSONProp } from "~~/typescript/components";
 import { FooterRes, HeaderRes } from "~~/typescript/response";
 import { BlogPost, Page } from "~~/typescript/pages";
-import { isEmpty } from "lodash";
-import { useFilter } from "~/composables/useFilter";
+import { useFilters } from "~/composables/useFilters";
 
 const json = ref(null);
 const forceUpdate = ref(0);
 const route = useRoute();
 const url = ref(route.fullPath);
-const { jsonFilter } = useFilter();
+const { jsonFilter } = useFilters();
 
 const getData = () => {
   const { getHeader, getFooter, getBlogList, getBlogPost, getPage } =
@@ -66,9 +65,10 @@ const getData = () => {
     footer: getFooter as FooterRes,
   };
 
-  !isEmpty(getPage) && (response.page = getPage as Page);
-  !isEmpty(getBlogPost) && (response.blog_post = getBlogPost as BlogPost);
-  !isEmpty(getBlogList) && (response.blog_lists = getBlogList as BlogPost[]);
+  const { $_ } = useNuxtApp();
+  !$_.isEmpty(getPage) && (response.page = getPage as Page);
+  !$_.isEmpty(getBlogPost) && (response.blog_post = getBlogPost as BlogPost);
+  !$_.isEmpty(getBlogList) && (response.blog_lists = getBlogList as BlogPost[]);
   const jsonData = jsonFilter(response);
   json.value = jsonData;
   return jsonData;

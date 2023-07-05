@@ -1,11 +1,11 @@
 import { BlogPost } from "~/typescript/pages";
 
 export const useBlogLists = async () => {
-  const blogPosts = (await useEntries({
+  const blogPosts = (await useAllEntries({
     contentTypeUid: "blog_post",
     referenceFieldPath: ["author", "related_post"],
     jsonRtePath: ["body"],
-  })) as BlogPost[][];
+  })) as unknown as BlogPost[][];
   const recentBlogs: BlogPost[] = [];
   const archivedBlogs: BlogPost[] = [];
   blogPosts[0].forEach((blog) => {
