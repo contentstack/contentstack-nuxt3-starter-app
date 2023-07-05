@@ -1,5 +1,5 @@
 <template>
-  <header class="header" v-if="!isEmpty(headerData)">
+  <header class="header" v-if="!$_.isEmpty(headerData)">
     <template v-if="headerData.notification_bar.show_announcement">
       <div class="note-div">
         <span
@@ -51,16 +51,16 @@
 </template>
 
 <script lang="tsx" setup>
-import { isEmpty } from "lodash";
-import { useFilter } from "~/composables/useFilter";
+import { useFilters } from "~/composables/useFilters";
+import { useAllEntries } from "~/composables/useAllEntries";
 import { usePageEntries } from "~/composables/usePageEntries";
 import { useResponseStore } from "~~/store";
 import { HeaderRes } from "~~/typescript/response";
 
 const store = useResponseStore();
 const headerData = ref<HeaderRes>();
-const { headerFilter } = useFilter();
-const header = (await useEntries({
+const { headerFilter } = useFilters();
+const header = (await useAllEntries({
   contentTypeUid: "header",
   referenceFieldPath: ["navigation_menu.page_reference"],
   jsonRtePath: ["notification_bar.announcement_text"],

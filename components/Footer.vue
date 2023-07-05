@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div class="max-width footer-div" v-if="!isEmpty(footerData)">
+    <div class="max-width footer-div" v-if="!$_.isEmpty(footerData)">
       <div class="col-quarter">
         <NuxtLink
           aria-current="page"
@@ -47,17 +47,17 @@
 </template>
 
 <script lang="tsx" setup>
-import { isEmpty } from "lodash";
-import { useFilter } from "~/composables/useFilter";
+import { useFilters } from "~/composables/useFilters";
+import { useAllEntries } from "~/composables/useAllEntries";
 import { usePageEntries } from "~/composables/usePageEntries";
 import { useResponseStore } from "~~/store";
 import { FooterRes } from "~~/typescript/response";
 
 const store = useResponseStore();
 const footerData = ref<FooterRes>();
-const { footerFilter } = useFilter();
+const { footerFilter } = useFilters();
 
-const footer = (await useEntries({
+const footer = (await useAllEntries({
   contentTypeUid: "footer",
   referenceFieldPath: undefined,
   jsonRtePath: ["copyright"],

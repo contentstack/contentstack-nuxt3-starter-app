@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     },
   },
   plugins: [
+    { src: "~/plugins/lodash.ts" },
     { src: "~/plugins/contentstack.ts" },
   ],
   app: {
@@ -62,17 +63,14 @@ export default defineNuxtConfig({
     [
       "@pinia/nuxt",
       {
-        autoImports: [
-          "defineStore",
-          ["defineStore", "definePiniaStore"],
-        ],
+        autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
       },
     ],
   ],
-  typescript:{
-    tsConfig:{
-      "allowJs": true,
-      "noImplicitAny": false
-    }
-  }
+  typescript: {
+    tsConfig: {
+      allowJs: true,
+      noImplicitAny: false,
+    },
+  },
 });

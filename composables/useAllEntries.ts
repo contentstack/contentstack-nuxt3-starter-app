@@ -5,7 +5,7 @@ type GetEntry = {
   jsonRtePath?: string[];
 };
 
-export const useEntries = ({
+export const useAllEntries = ({
   contentTypeUid,
   referenceFieldPath,
   jsonRtePath,
@@ -16,7 +16,7 @@ export const useEntries = ({
     },
   };
   const { $stack } = useNuxtApp();
-  
+
   return new Promise((resolve, reject) => {
     const query = $stack.ContentType(contentTypeUid).Query();
     if (referenceFieldPath) query.includeReference(referenceFieldPath);

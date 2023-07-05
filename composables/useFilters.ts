@@ -1,16 +1,20 @@
-import { find } from "lodash";
 import { Page } from "~/typescript/pages";
 import { FooterRes, HeaderRes } from "~/typescript/response";
 
-export const useFilter = () => {
+export const useFilters = () => {
+  const { $_ } = useNuxtApp();
   const headerFilter = (
     allEntries: Page[],
     headerRes: HeaderRes
   ): HeaderRes => {
     const navHeaderList = headerRes.navigation_menu;
+
     if (allEntries.length !== navHeaderList.length) {
       allEntries.forEach((entry) => {
-        const newNavFound = find(navHeaderList,(navLink)=>navLink.label === entry.title)
+        const newNavFound = $_.find(
+          navHeaderList,
+          (navLink) => navLink.label === entry.title
+        );
         if (newNavFound) {
           navHeaderList.push({
             label: entry.title,
@@ -29,7 +33,10 @@ export const useFilter = () => {
     const navFooterList = footerRes.navigation.link;
     if (allEntries.length !== footerRes.navigation.link.length) {
       allEntries.forEach((entry) => {
-        const newLinkFound = find(navFooterList,(navLink)=>navLink.title === entry.title)
+        const newLinkFound = $_.find(
+          navFooterList,
+          (navLink) => navLink.title === entry.title
+        );
         if (newLinkFound) {
           navFooterList.push({ title: entry.title, href: entry.url });
         }
