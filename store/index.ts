@@ -5,15 +5,15 @@ export const useResponseStore = defineStore("Response", {
   state: () => ({
     header: {} as HeaderRes,
     footer: {} as FooterRes,
-    page: {} as Page,
-    blogPost: {} as BlogPost,
-    blogList: [] as BlogPost[],
+    page: {} as Page | {},
+    blogPost: {} as BlogPost | {},
+    blogList: [] as BlogPost[] | [],
   }),
   getters: {
     getHeader: (state):HeaderRes => state.header,
     getFooter: (state):FooterRes => state.footer,
-    getPage: (state):Page => state.page,
-    getBlogPost: (state):BlogPost => state.blogPost,
+    getPage: (state):Page | {} => state.page,
+    getBlogPost: (state):BlogPost | {} => state.blogPost,
     getBlogList: (state):BlogPost[] => state.blogList,
   },
   actions: {
@@ -23,10 +23,10 @@ export const useResponseStore = defineStore("Response", {
     setFooter(payload:FooterRes) {
       this.$state.footer = payload;
     },
-    setPage(payload:Page) {
+    setPage(payload:Page | {}) {
       this.$state.page = payload;
     },
-    setBlogPost(payload:BlogPost) {
+    setBlogPost(payload:BlogPost | {}) {
       this.$state.blogPost = payload;
     },
     setBlogList(payload:BlogPost[]) {

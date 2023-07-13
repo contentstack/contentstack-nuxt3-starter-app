@@ -16,7 +16,7 @@
       </p>
       <template>
         <router-link
-          v-if="data.call_to_action.title && data.call_to_action.href"
+          v-if="data.call_to_action && data.call_to_action.href"
           aria-current="page"
           class="btn tertiary-btn"
           to="/">

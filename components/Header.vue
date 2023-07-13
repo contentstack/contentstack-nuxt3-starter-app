@@ -1,8 +1,9 @@
 <template>
-  <header class="header" v-if="headerData">
+  <header class="header" v-if="!$_.isEmpty(headerData)">
     <template v-if="headerData.notification_bar.show_announcement">
       <div class="note-div">
-        <span v-html="headerData.notification_bar.announcement_text" />
+        <span
+          v-dompurify-html="headerData.notification_bar.announcement_text" />
       </div>
     </template>
     <div class="max-width header-div">
@@ -26,43 +27,50 @@
         <ul class="nav-ul header-ul">
           <li
             v-for="navItems in headerData.navigation_menu"
-            :key="navItems.title"
+            :key="navItems.label"
             class="nav-li">
-            <NuxtLink :to="navItems.page_reference[0].url">
+            <NuxtLink
+              :to="navItems.page_reference[0].url"
+              :exact-active-class="'active'">
               {{ navItems.label }}
             </NuxtLink>
           </li>
         </ul>
       </nav>
       <div class="json-preview">
-        <ToolTip content="JSON Preview" direction="top">
-          <span data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            <img src="../static/json.svg" alt="JSON Preview icon" />
-          </span>
-        </ToolTip>
+        <client-only>
+          <ToolTip content="JSON Preview" direction="top">
+            <span data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <img src="../static/json.svg" alt="JSON Preview icon" />
+            </span>
+          </ToolTip>
+        </client-only>
       </div>
     </div>
   </header>
 </template>
 
 <script lang="tsx" setup>
-import { getHeader, getAllEntries, filterHeaderNav } from "~/helper";
-import { onEntryChange } from "~~/sdk";
+import { useFilters } from "~/composables/useFilters";
+import { useAllEntries } from "~/composables/useAllEntries";
+import { usePageEntries } from "~/composables/usePageEntries";
 import { useResponseStore } from "~~/store";
 import { HeaderRes } from "~~/typescript/response";
-const store = useResponseStore();
 
+const store = useResponseStore();
 const headerData = ref<HeaderRes>();
-const fetchHeaderData = async () => {
-  const result = await getHeader();
-  // only for dynamic pages
-  const responsePages = await getAllEntries();
-  const newHeaderRes = filterHeaderNav(responsePages, result);
-  headerData.value = newHeaderRes;
-  //ends
-  store.setHeader(newHeaderRes);
-};
-onMounted(() => {
-  onEntryChange(fetchHeaderData);
-});
+const { headerFilter } = useFilters();
+const header = (await useAllEntries({
+  contentTypeUid: "header",
+  referenceFieldPath: ["navigation_menu.page_reference"],
+  jsonRtePath: ["notification_bar.announcement_text"],
+})) as HeaderRes[][];
+
+const allEntries = await usePageEntries();
+// to create nav routes for dynamic pages
+const updatedHeader = headerFilter(allEntries, header[0][0]);
+headerData.value = updatedHeader;
+
+// global store to access header data
+store.setHeader(updatedHeader);
 </script>
