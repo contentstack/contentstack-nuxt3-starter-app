@@ -9,8 +9,8 @@ type BasicConfig = {
 };
 type LPConfig = {
   livePreview: string;
-  managementToken: string;
-  apiHost: string;
+  previewToken: string;
+  previewHost: string;
 };
 type StackConfig = BasicConfig & LPConfig;
 export const isBasicConfigValid = ({
@@ -25,10 +25,10 @@ export const isBasicConfigValid = ({
 };
 export const isLpConfigValid = ({
   livePreview,
-  managementToken,
-  apiHost,
+  previewToken,
+  previewHost,
 }: LPConfig) => {
-  if (!!livePreview && !!managementToken && !!apiHost) {
+  if (!!livePreview && !!previewToken && !!previewHost) {
     return true;
   }
   return false;
@@ -47,15 +47,15 @@ const setRegion = (region: string): contentstack.Region => {
 
 const setLivePreviewConfig = ({
   livePreview,
-  managementToken,
-  apiHost,
+  previewToken,
+  previewHost,
 }: LPConfig): contentstack.LivePreview => {
-  if (!isLpConfigValid({ managementToken, livePreview, apiHost }))
+  if (!isLpConfigValid({ previewToken, livePreview, previewHost }))
     throw new Error("Please first configure you LP config in .env file");
   return {
-    management_token: managementToken,
+    preview_token: previewToken,
     enable: livePreview === "true",
-    host: apiHost,
+    host: previewHost,
   } as contentstack.LivePreview;
 };
 
@@ -66,8 +66,8 @@ export const initializeContentStackSdk = ({
   region,
   branch,
   livePreview,
-  managementToken,
-  apiHost,
+  previewToken,
+  previewHost,
 }: StackConfig): contentstack.Stack => {
   if (!isBasicConfigValid({ apiKey, deliveryToken, environment }))
     throw new Error("Please set you .env file before running starter app");
@@ -81,8 +81,8 @@ export const initializeContentStackSdk = ({
   if (livePreview === "true") {
     stackConfig.live_preview = setLivePreviewConfig({
       livePreview,
-      managementToken,
-      apiHost,
+      previewToken,
+      previewHost,
     });
   }
   return contentstack.Stack(stackConfig);
@@ -90,7 +90,6 @@ export const initializeContentStackSdk = ({
 
 export const initializeLivePreviewSdk = (Stack: contentstack.Stack) => {
   ContentstackLivePreview.init({
-    enable: true,
     stackDetails: Stack,
     ssr: true,
   })?.catch((err) => {
