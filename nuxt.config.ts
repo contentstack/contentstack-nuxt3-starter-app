@@ -56,9 +56,7 @@ export default defineNuxtConfig({
     },
   },
   css: [
-    "~/assets/styles/style.css",
-    "~/assets/styles/third-party.css",
-    "~/assets/styles/tooltip.css",
+    "/assets/styles/main.css",
   ],
   modules: [
     [
