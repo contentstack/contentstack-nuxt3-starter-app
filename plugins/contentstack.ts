@@ -15,9 +15,10 @@ export default defineNuxtPlugin({
       environment,
       region,
       branch,
-      managementToken,
+      previewToken,
       livePreview,
-      apiHost,
+      previewHost,
+      apiHost
     } = nuxtApp.$config.public;
 
     const sdkInit = initializeContentStackSdk({
@@ -26,14 +27,14 @@ export default defineNuxtPlugin({
       environment,
       region,
       branch,
-      managementToken,
+      previewToken,
       livePreview,
-      apiHost,
+      previewHost,
     });
 
     // for apiHost cdn url
-    const customHost = customHostUrl(apiHost);
-    if (isValidCustomHostUrl(customHost)) {
+    const customHost = apiHost ? customHostUrl(apiHost): "";
+    if (customHost && isValidCustomHostUrl(customHost)) {
       // only for non prod apiHost urls/ custom hosts
       sdkInit.setHost(customHost);
     }
