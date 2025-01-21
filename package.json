@@ -22,7 +22,7 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
     "pinia": "^2.1.4",
-    "vue-dompurify-html": "^4.1.4",
+    "vue-dompurify-html": "^5.2.0",
     "vue3-json-viewer": "^2.2.2"
   },
   "devDependencies": {
