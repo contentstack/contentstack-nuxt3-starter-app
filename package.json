@@ -32,7 +32,11 @@
   },
   "overrides": {
     "vue": "latest",
-    "dompurify": "3.2.4"
-
+    "dompurify": "3.2.4",
+    "@babel/helpers": "7.26.10",
+    "braces": "3.0.3",
+    "cross-spawn": "7.0.5",
+    "micromatch": "4.0.8",
+    "tar": "6.2.1"
   }
 }
