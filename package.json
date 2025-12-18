@@ -31,6 +31,8 @@
     "semver": "^7.5.3"
   },
   "overrides": {
-    "vue": "latest"
+    "vue": "latest",
+    "dompurify": "3.2.4"
+
   }
 }
