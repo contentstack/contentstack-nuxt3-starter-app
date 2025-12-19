@@ -68,8 +68,10 @@ export default defineNuxtConfig({
   ],
   typescript: {
     tsConfig: {
+      compilerOptions: {
       allowJs: true,
       noImplicitAny: false,
+      },
     },
   },
 });
