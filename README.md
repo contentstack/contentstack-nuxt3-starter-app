@@ -1,3 +1,6 @@
+> [!WARNING]
+  **This repo is deprecated and no longer maintained. Security updates are not supported. We recommend avoiding its use for production.**
+
 [![Contentstack](/static/contentstack-readme-logo.png)](https://www.contentstack.com/)
 
 # Create a marketing website using Nuxt3
